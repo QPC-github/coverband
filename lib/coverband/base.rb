@@ -87,16 +87,14 @@ module Coverband
       end
 
       if @reporter
-        if @reporter.class.name.match(/redis/i)
-          before_time = Time.now
-          @stats.count "coverband.files.recorded_files", @files.length if @stats
-          @reporter.store_report(@files.dup)
-          time_spent = Time.now - before_time
-          @stats.timing "coverband.files.recorded_time", time_spent if @stats
-          @files = {}
-          @file_usage = Hash.new(0)
-          @file_line_usage = {}
-        end
+        before_time = Time.now
+        @stats.count "coverband.files.recorded_files", @files.length if @stats
+        @reporter.store_report(@files.dup)
+        time_spent = Time.now - before_time
+        @stats.timing "coverband.files.recorded_time", time_spent if @stats
+        @files = {}
+        @file_usage = Hash.new(0)
+        @file_line_usage = {}
       elsif @verbose
         @logger.info "coverage report: "
         @logger.info @files.inspect
