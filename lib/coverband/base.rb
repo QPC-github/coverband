@@ -41,7 +41,7 @@ module Coverband
       @startup_delay = Coverband.configuration.startup_delay
       @ignore_patterns = Coverband.configuration.ignore
       @sample_percentage = Coverband.configuration.percentage
-      @reporter = Coverband::RedisStore.new(Coverband.configuration.redis) if Coverband.configuration.redis
+      @reporter = Coverband.configuration.reporter || (Coverband.configuration.redis && Coverband::RedisStore.new(Coverband.configuration.redis))
       @stats    = Coverband.configuration.stats
       @verbose  = Coverband.configuration.verbose
       @logger   = Coverband.configuration.logger
